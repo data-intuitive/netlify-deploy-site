@@ -13,7 +13,7 @@ assumes the directory is ready to be deployed as is.
 
 ``` yaml
 - name: Deploy to Netlify 🚀
-  uses: data-intuitive/netlify-deploy-action@v1.0.0
+  uses: data-intuitive/netlify-deploy-action@v1
   with:
     auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     site: 'my-netlify-site'
@@ -89,7 +89,7 @@ jobs:
 
       - name: Deploy to Netlify 🚀
         if: github.event_name != 'pull_request'
-        uses: data-intuitive/netlify-deploy-action@v1.0.0
+        uses: data-intuitive/netlify-deploy-action@v1
         with:
           auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           dir: '_site'
@@ -100,7 +100,7 @@ jobs:
       - name: Deploy preview
         id: deploy_preview
         if: github.event_name == 'pull_request'
-        uses: data-intuitive/netlify-deploy-action@v1.0.0
+        uses: data-intuitive/netlify-deploy-action@v1
         with:
           auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           dir: '_site'
