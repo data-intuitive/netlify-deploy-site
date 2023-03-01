@@ -91,3 +91,7 @@ runs:
           jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
           jq -r '"deploy-url=" + .deploy_url' "$TEMP_JSON" >> $GITHUB_OUTPUT
           jq -r '"logs=" + .logs' "$TEMP_JSON" >> $GITHUB_OUTPUT
+
+branding:
+  icon: arrow-up-circle
+  color: blue
