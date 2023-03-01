@@ -1,13 +1,13 @@
-Netlify Deploy Pre-rendered Site
+Netlify Deploy Site
 ================
 
-Deploy a pre-rendered site to Netlify.
+Deploy a site to Netlify.
 
 ## Usage
 
 ``` yaml
 - name: Deploy to Netlify 🚀
-  uses: data-intuitive/netlify-deploy-action@v1
+  uses: data-intuitive/netlify-deploy-site@v1
   with:
     auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     site: 'my-netlify-site'
@@ -83,7 +83,7 @@ jobs:
 
       - name: Deploy to Netlify 🚀
         if: github.event_name != 'pull_request'
-        uses: data-intuitive/netlify-deploy-action@v1
+        uses: data-intuitive/netlify-deploy-site@v1
         with:
           auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           dir: '_site'
@@ -94,7 +94,7 @@ jobs:
       - name: Deploy preview
         id: deploy_preview
         if: github.event_name == 'pull_request'
-        uses: data-intuitive/netlify-deploy-action@v1
+        uses: data-intuitive/netlify-deploy-site@v1
         with:
           auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           dir: '_site'

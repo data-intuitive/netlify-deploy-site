@@ -1,8 +1,8 @@
 ---
-name: Netlify Deploy Pre-rendered Site
+name: Netlify Deploy Site
 author: Data Intuitive
 description: |
-  Deploy a pre-rendered site to Netlify.
+  Deploy a site to Netlify.
 inputs:
   auth:
     description: Netlify auth token to deploy with. Generate the auth token [here](https://app.netlify.com/user/applications#personal-access-tokens).

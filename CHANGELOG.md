@@ -1,4 +1,4 @@
-## Netlify Deploy Pre-rendered Site v1.0.0
+## Netlify Deploy Site v1.0.0
 
 Initial release.
 
@@ -6,7 +6,7 @@ Example usage:
 
 ```yaml
 - name: Deploy to Netlify 🚀
-  uses: data-intuitive/netlify-deploy-action@v1
+  uses: data-intuitive/netlify-deploy-site@v1
   with:
     auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     site: 'my-netlify-site'
