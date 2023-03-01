@@ -46,8 +46,6 @@ assumes the directory is ready to be deployed as is.
 - `timeout` (*optional*): Timeout to wait for deployment to finish
   (string).
 
-- `debug` (*optional*): Print debugging information (boolean).
-
 ## Outputs
 
 - `site-name`: The name of the Netlify site associated with the

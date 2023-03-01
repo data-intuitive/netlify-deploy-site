@@ -31,10 +31,6 @@ inputs:
   timeout:
     description: Timeout to wait for deployment to finish (string).
     required: false
-  debug:
-    description: Print debugging information (boolean).
-    required: false
-    default: "false"
 outputs:
   site-name:
     description: The name of the Netlify site associated with the deployment.
@@ -91,13 +87,8 @@ runs:
             ARGS+=("--timeout=${{ inputs.timeout }}")
           fi
 
-          # process debug
-          if [[ "${{ inputs.debug }}" == "true" ]]; then
-            ARGS+=("--debug")
-          fi
-
           TEMP_JSON="${{runner.temp}}/output.json"
-          netlify deploy --json "${ARGS[@]}" | tee "$TEMP_JSON"
+          netlify deploy --json --debug "${ARGS[@]}" | tee "$TEMP_JSON"
 
           jq -r '"site-name=" + .site_name' "$TEMP_JSON" >> $GITHUB_OUTPUT
           jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
