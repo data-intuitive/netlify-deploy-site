@@ -1,0 +1,105 @@
+---
+name: Netlify Deploy
+author: Data Intuitive
+description: |
+  A wrapper for the "netlify deploy" command, used for deploying pre-rendered site to Netlify.
+  See the [Netlify reference documentation](https://cli.netlify.com/commands/deploy/#nodejs-function-entry-points) for more information.
+
+  Note: This action does not perform a build of the static website and assumes the directory is ready to be deployed as is.
+inputs:
+  auth:
+    description: Netlify auth token to deploy with. Generate the auth token [here](https://app.netlify.com/user/applications#personal-access-tokens).
+    required: true
+  alias:
+    description: |
+      Specifies the alias for deployment, the string at the beginning of the deploy subdomain (string).
+      Useful for creating predictable deployment URLs. Maximum 37 characters.
+    required: false
+  dir:
+    description: Specify a folder to deploy (string).
+    required: true
+  prod:
+    description: Whether the site should be deployed to production (boolean).
+    required: false
+    default: "false"
+  message:
+    description: A short message to include in the deploy log (string).
+    required: false
+  site:
+    description: A site name or ID to deploy to (string). You can retrieve the API ID on your Site Settings.
+    required: true
+  timeout:
+    description: Timeout to wait for deployment to finish (string).
+    required: false
+  debug:
+    description: Print debugging information (boolean).
+    required: false
+    default: "false"
+outputs:
+  site-name:
+    description: The name of the Netlify site associated with the deployment.
+    value: ${{ steps.netlify-deploy.outputs.site-name }}
+  deploy-id:
+    description: A unique identifier assigned by Netlify to the deployment. It is used to track and manage the deployment, and can be used to retrieve additional information about the deployment from the Netlify API.
+    value: ${{ steps.netlify-deploy.outputs.deploy-id }}
+  deploy-url:
+    description: The URL of the deployed site. It indicates the URL where the deployed application can be accessed by end-users.
+    value: ${{ steps.netlify-deploy.outputs.deploy-url }}
+  logs:
+    description: The URL of the deployment logs. It provides detailed information about the deployment process, including any errors or warnings that occurred during the deployment.
+    value: ${{ steps.netlify-deploy.outputs.logs }}
+runs:
+  using: composite
+  steps:
+      - shell: bash
+        id: netlify-deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ inputs.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ inputs.NETLIFY_SITE_ID }}
+        run: |
+          ARGS=()
+          
+          # process auth
+          if [[ -n "${{ inputs.auth }}" ]]; then
+            ARGS+=("--auth=${{ inputs.auth }}")
+          fi
+
+          # process prod and alias
+          if [[ "${{ inputs.prod }}" == "true" ]]; then
+            ARGS+=("--prod")
+          elif [[ -n "${{ inputs.alias }}" ]]; then
+            ARGS+=("--alias=${{ inputs.alias }}")
+          fi
+
+          # process dir
+          if [[ -n "${{ inputs.dir }}" ]]; then
+            ARGS+=("--dir=${{ inputs.dir }}")
+          fi
+
+          # process message
+          if [[ -n "${{ inputs.message }}" ]]; then
+            ARGS+=("--message=${{ inputs.message }}")
+          fi
+
+          # process site
+          if [[ -n "${{ inputs.site }}" ]]; then
+            ARGS+=("--site=${{ inputs.site }}")
+          fi
+
+          # process timeout
+          if [[ -n "${{ inputs.timeout }}" ]]; then
+            ARGS+=("--timeout=${{ inputs.timeout }}")
+          fi
+
+          # process debug
+          if [[ "${{ inputs.debug }}" == "true" ]]; then
+            ARGS+=("--debug")
+          fi
+
+          TEMP_JSON="${{runner.temp}}/output.json"
+          netlify deploy --json "${ARGS[@]}" | tee "$TEMP_JSON"
+
+          jq -r '"site-name=" + .site_name' "$TEMP_JSON" >> $GITHUB_OUTPUT
+          jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
+          jq -r '"deploy-url=" + .deploy_url' "$TEMP_JSON" >> $GITHUB_OUTPUT
+          jq -r '"logs=" + .logs' "$TEMP_JSON" >> $GITHUB_OUTPUT
