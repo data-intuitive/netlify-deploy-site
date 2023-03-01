@@ -1,13 +1,7 @@
-Netlify Deploy Github Action
+Netlify Deploy Pre-rendered Site
 ================
 
-A wrapper for the “netlify deploy” command, used for deploying
-pre-rendered site to Netlify. See the [Netlify reference
-documentation](https://cli.netlify.com/commands/deploy/#nodejs-function-entry-points)
-for more information.
-
-Note: This action does not perform a build of the static website and
-assumes the directory is ready to be deployed as is.
+Deploy a pre-rendered site to Netlify.
 
 ## Usage
 

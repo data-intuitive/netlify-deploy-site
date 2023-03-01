@@ -1,5 +1,5 @@
 ---
-title: Netlify Deploy Github Action
+title: Netlify Deploy Pre-rendered Site
 format: gfm
 ---
 
