@@ -1,8 +1,7 @@
 ---
 name: Netlify Deploy Site
 author: Data Intuitive
-description: |
-  Deploy a site to Netlify.
+description: Deploy a site to Netlify.
 inputs:
   auth:
     description: Netlify auth token to deploy with. Generate the auth token [here](https://app.netlify.com/user/applications#personal-access-tokens).
@@ -44,53 +43,53 @@ outputs:
 runs:
   using: composite
   steps:
-      - shell: bash
-        id: netlify-deploy
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ inputs.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ inputs.NETLIFY_SITE_ID }}
-        run: |
-          ARGS=()
-          
-          # process auth
-          if [[ -n "${{ inputs.auth }}" ]]; then
-            ARGS+=("--auth=${{ inputs.auth }}")
-          fi
+    - shell: bash
+      id: netlify-deploy
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ inputs.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ inputs.NETLIFY_SITE_ID }}
+      run: |
+        ARGS=()
+        
+        # process auth
+        if [[ -n "${{ inputs.auth }}" ]]; then
+          ARGS+=("--auth=${{ inputs.auth }}")
+        fi
 
-          # process prod and alias
-          if [[ "${{ inputs.prod }}" == "true" ]]; then
-            ARGS+=("--prod")
-          elif [[ -n "${{ inputs.alias }}" ]]; then
-            ARGS+=("--alias=${{ inputs.alias }}")
-          fi
+        # process prod and alias
+        if [[ "${{ inputs.prod }}" == "true" ]]; then
+          ARGS+=("--prod")
+        elif [[ -n "${{ inputs.alias }}" ]]; then
+          ARGS+=("--alias=${{ inputs.alias }}")
+        fi
 
-          # process dir
-          if [[ -n "${{ inputs.dir }}" ]]; then
-            ARGS+=("--dir=${{ inputs.dir }}")
-          fi
+        # process dir
+        if [[ -n "${{ inputs.dir }}" ]]; then
+          ARGS+=("--dir=${{ inputs.dir }}")
+        fi
 
-          # process message
-          if [[ -n "${{ inputs.message }}" ]]; then
-            ARGS+=("--message=${{ inputs.message }}")
-          fi
+        # process message
+        if [[ -n "${{ inputs.message }}" ]]; then
+          ARGS+=("--message=${{ inputs.message }}")
+        fi
 
-          # process site
-          if [[ -n "${{ inputs.site }}" ]]; then
-            ARGS+=("--site=${{ inputs.site }}")
-          fi
+        # process site
+        if [[ -n "${{ inputs.site }}" ]]; then
+          ARGS+=("--site=${{ inputs.site }}")
+        fi
 
-          # process timeout
-          if [[ -n "${{ inputs.timeout }}" ]]; then
-            ARGS+=("--timeout=${{ inputs.timeout }}")
-          fi
+        # process timeout
+        if [[ -n "${{ inputs.timeout }}" ]]; then
+          ARGS+=("--timeout=${{ inputs.timeout }}")
+        fi
 
-          TEMP_JSON="${{runner.temp}}/output.json"
-          netlify deploy --json --debug "${ARGS[@]}" | tee "$TEMP_JSON"
+        TEMP_JSON="${{runner.temp}}/output.json"
+        netlify deploy --json --debug "${ARGS[@]}" | tee "$TEMP_JSON"
 
-          jq -r '"site-name=" + .site_name' "$TEMP_JSON" >> $GITHUB_OUTPUT
-          jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
-          jq -r '"deploy-url=" + .deploy_url' "$TEMP_JSON" >> $GITHUB_OUTPUT
-          jq -r '"logs=" + .logs' "$TEMP_JSON" >> $GITHUB_OUTPUT
+        jq -r '"site-name=" + .site_name' "$TEMP_JSON" >> $GITHUB_OUTPUT
+        jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
+        jq -r '"deploy-url=" + .deploy_url' "$TEMP_JSON" >> $GITHUB_OUTPUT
+        jq -r '"logs=" + .logs' "$TEMP_JSON" >> $GITHUB_OUTPUT
 
 branding:
   icon: arrow-up-circle
