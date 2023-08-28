@@ -2,7 +2,7 @@
 
 ## Bug Fixes
 
-* Fix a bug where `netlify deploy` included debug information in stdout, causing `parse error` in subsequent parsing of the outpus json (PR #2).
+* Fix a bug where `netlify deploy` included debug information in stdout, causing `parse error` during the parsing of the output json (PR #2).
 
 # Netlify Deploy Site v1.0.0
 
