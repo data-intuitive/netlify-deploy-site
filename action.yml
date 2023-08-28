@@ -87,7 +87,9 @@ runs:
         netlify deploy --json --debug "${ARGS[@]}" | tee "$TEMP_JSON"
 
         sed -i '/^\s*$/d' "$TEMP_JSON"
+        echo "START:"
         cat "$TEMP_JSON"
+        echo "END"
         jq --version
         jq -r '"site-name=" + .site_name' "$TEMP_JSON" >> $GITHUB_OUTPUT
         jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
