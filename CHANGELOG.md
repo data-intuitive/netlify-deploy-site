@@ -1,4 +1,10 @@
-## Netlify Deploy Site v1.0.0
+# Netlify Deploy Site v1.0.1
+
+## BUG FIXES
+
+* Fix issue where `netlify deploy` started outputting debug information to stdout.
+
+# Netlify Deploy Site v1.0.0
 
 Initial release.
 
