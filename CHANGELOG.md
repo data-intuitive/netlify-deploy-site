@@ -1,8 +1,14 @@
+# Netlify Deploy Site v1.0.2
+
+## BUG FIXES
+
+* Alternate solution for removing debug info from stdout (PR #2).
+
 # Netlify Deploy Site v1.0.1
 
-## Bug Fixes
+## BUG FIXES
 
-* Fix a bug where `netlify deploy` included debug information in stdout, causing `parse error` during the parsing of the output json (PR #2).
+* Fix issue where `netlify deploy` started outputting debug information to stdout.
 
 # Netlify Deploy Site v1.0.0
 
