@@ -88,7 +88,7 @@ runs:
 
         sed -i '/^\s*$/d' "$TEMP_JSON"
         cat "$TEMP_JSON"
-
+        jq --version
         jq -r '"site-name=" + .site_name' "$TEMP_JSON" >> $GITHUB_OUTPUT
         jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
         jq -r '"deploy-url=" + .deploy_url' "$TEMP_JSON" >> $GITHUB_OUTPUT
