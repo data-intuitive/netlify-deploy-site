@@ -1,4 +1,10 @@
-## Netlify Deploy Site v1.0.0
+# Netlify Deploy Site v1.0.1
+
+## Bug Fixes
+
+* Fix a bug where `netlify deploy` included debug information in stdout, causing `parse error` in subsequent parsing of the outpus json.
+
+# Netlify Deploy Site v1.0.0
 
 Initial release.
 
