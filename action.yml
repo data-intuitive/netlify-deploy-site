@@ -84,10 +84,11 @@ runs:
         fi
 
         TEMP_JSON="${{runner.temp}}/output.json"
-        netlify deploy --json --debug "${ARGS[@]}" > >(tee "$TEMP_JSON")
+
+        netlify deploy --json "${ARGS[@]}" > >(tee "$TEMP_JSON")
         
         # remove non-json output
-        gawk -i inplace 'BEGIN { p=0 }; /^{$/ { p=1 }; p { print $0 }; p==1 && /^}$/ { p=0 }' "$TEMP_JSON"
+        # gawk -i inplace 'BEGIN { p=0 }; /^{$/ { p=1 }; p { print $0 }; p==1 && /^}$/ { p=0 }' "$TEMP_JSON"
 
         jq -r '"site-name=" + .site_name' "$TEMP_JSON" >> $GITHUB_OUTPUT
         jq -r '"deploy-id=" + .deploy_id' "$TEMP_JSON" >> $GITHUB_OUTPUT
@@ -97,3 +98,4 @@ runs:
 branding:
   icon: arrow-up-circle
   color: blue
+

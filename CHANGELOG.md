@@ -1,3 +1,9 @@
+# Netlify Deploy Site v1.0.2
+
+## BUG FIXES
+
+* Alternate solution for removing debug info from stdout (PR #2).
+
 # Netlify Deploy Site v1.0.1
 
 ## BUG FIXES
