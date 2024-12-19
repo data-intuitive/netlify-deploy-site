@@ -1,3 +1,9 @@
+# Netlify Deploy Site v1.0.3
+
+## BUG FIXES
+
+* Install Netlify CLI if it is not already installed (PR #3).
+
 # Netlify Deploy Site v1.0.2
 
 ## BUG FIXES
