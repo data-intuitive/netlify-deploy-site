@@ -43,6 +43,10 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Install Netlify CLI
+      run: which netlify &> /dev/null || npm install netlify-cli@17.36.1 -g
+      shell: bash
+
     - shell: bash
       id: netlify-deploy
       env:
